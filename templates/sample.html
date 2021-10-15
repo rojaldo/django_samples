@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+  {% block mytitle %}
+    <title>Calculadora</title>
+    {% endblock %}
+
+{% block mainbody %}
+    <form action="/calc/" method="post">{% csrf_token %}
+        <label for="your_name">Your name: </label>
+        <input id="your_name" type="text" name="expression" value="{{ current_name }}">
+        <input type="submit" value="OK">
+    </form>
+    <h3>Resultado: {{ feedback }}</h3>
+{% endblock %}
+
+
