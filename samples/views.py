@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from samples.calculator_engine import processString
-from samples.models import Customer
+from samples.models import Customer, Hero
 
 def hello_world(request):
     name = request.GET.get('name', 'World')
@@ -73,3 +73,17 @@ def create_model_demo(request):
     name = request.GET.get('name', 'World')
     Customer.objects.create(name='Customer 1', age=19)
     return HttpResponse('Customer created! {}'.format(Customer.objects.last()))
+
+def heroes(request):
+    context = {}
+    if request.method == "POST":
+        content = request.POST
+        heroName = content['name']
+        heroDescription = content['description']
+        print(content['name'])
+        print(content['description'])
+        Hero.objects.create(name=heroName, description=heroDescription)
+        context['heroes'] = Hero.objects.all()
+    if request.method == "GET":
+        context['heroes'] = Hero.objects.all()
+    return render(request, 'heroes.html', context)

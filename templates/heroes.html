@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+  {% block mytitle %}
+    <title>Heroes</title>
+    {% endblock %}
+
+{% block mainbody %}
+    <form action="/heroes/" method="post">{% csrf_token %}
+        <label for="hero_name">Hero name: </label>
+        <input id="hero_name" type="text" name="name" value="">
+        <label for="hero_description">Hero description: </label>
+        <input id="hero_description" type="text" name="description" value="">
+        <input type="submit" value="OK">
+    </form>
+     {% for hero in heroes %}
+        <li class="list-group-item"><strong>{{ hero.name }}</strong></br><p>{{hero.description}}</p></li>
+        {% empty %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Lista vacía</strong>
+        </div>
+    {% endfor %}  
+{% endblock %}
