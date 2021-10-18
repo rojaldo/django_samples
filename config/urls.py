@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from samples.views import hello_world, calculator, calculate, show_static_demo
+from samples.views import hello_world, calculator, calculate, show_static_demo, show_model_demo, create_model_demo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello_world),
     path('staticdemo/', show_static_demo),
+    path('modeldemo/', show_model_demo),
+    path('createcustomer/', create_model_demo),
     path('calculadora/', calculator),
     path('calc/', calculate),
 

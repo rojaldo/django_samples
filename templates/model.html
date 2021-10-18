@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+  {% block mytitle %}
+    <title>Model</title>
+    {% endblock %}
+
+{% block mainbody %}
+{% for customer in customers %}
+        <li class="list-group-item"><strong>{{ customer.name }}: </strong> {{customer.age}}</li>
+        {% empty %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Lista vacía</strong>
+        </div>
+    {% endfor %}    
+{% endblock %}

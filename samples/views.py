@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 from samples.calculator_engine import processString
+from samples.models import Customer
 
 def hello_world(request):
     name = request.GET.get('name', 'World')
@@ -62,3 +63,13 @@ def calculate(request):
 def show_static_demo(request):
     context = {}
     return render(request, 'static.html', context)
+
+def show_model_demo(request):
+    context = {}
+    context['customers'] = Customer.objects.all()
+    return render(request, 'model.html', context)
+
+def create_model_demo(request):
+    name = request.GET.get('name', 'World')
+    Customer.objects.create(name='Customer 1', age=19)
+    return HttpResponse('Customer created! {}'.format(Customer.objects.last()))
