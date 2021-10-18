@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+  {% block mytitle %}
+    <title>Calculadora</title>
+    {% endblock %}
+
+{% block mainbody %}
+    {% load static %}
+        <img src="{% static 'Bender.png' %}" alt="My image">
+    
+    <video width="320" height="240" controls>
+        <source src="{% static 'demo_video.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <audio controls>
+        <source src="{% static 'test_2.wav' %}">
+        Your browser does not support the audio element.
+    </audio>
+{% endblock %}
+
+

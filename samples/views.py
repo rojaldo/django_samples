@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 from django.http import HttpResponse
- 
+from samples.calculator_engine import processString
+
 def hello_world(request):
     name = request.GET.get('name', 'World')
     return HttpResponse('Hello {}!'.format(name))
@@ -45,12 +46,19 @@ def hello(request):
 
     return render(request, 'hello.html', context)
 
+
 def calculate(request):
     context = {}
     if request.method == "POST":
         content = request.POST
         print(content['expression'])
-        context['feedback'] = content['expression']
+        stringExpression = content['expression']
+        result = processString(stringExpression)
+        context['feedback'] = stringExpression + '=' + str(result)
     if request.method == "GET":
         context['feedback'] = 'No expression'
     return render(request, 'sample.html', context)
+
+def show_static_demo(request):
+    context = {}
+    return render(request, 'static.html', context)
