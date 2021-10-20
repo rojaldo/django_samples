@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from samples.views import hello_world, calculator, calculate, show_static_demo, show_model_demo, create_model_demo, heroes
+from samples.views import hello_world, calculator, calculate, show_static_demo, show_model_demo, create_model_demo, heroes, apod
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +26,6 @@ urlpatterns = [
     path('calculadora/', calculator),
     path('calc/', calculate),
     path('heroes/', heroes),
+    path('apod/', apod),
 
 ]
