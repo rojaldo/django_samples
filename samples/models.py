@@ -21,3 +21,11 @@ class NasaAPOD(models.Model):
 
     def __str__(self):
         return self.title + ' - ' + self.date + ' - ' + self.media_type + ' - ' + self.copyright + ' - ' + self.explanation
+
+class Beer(models.Model):
+    name = models.CharField(max_length=120)
+    tagline = models.CharField(max_length=120)
+    description = models.CharField(max_length=120)
+    abv = models.FloatField()
+    first_brewed = models.CharField(max_length=20)
+    image_url = models.URLField(max_length=100)

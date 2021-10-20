@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from samples.calculator_engine import processString
 from samples.models import Customer, Hero
-from samples.process import json_to_nasa_APOD
+from samples.process import json_to_nasa_APOD, get_beers
 
 def hello_world(request):
     name = request.GET.get('name', 'World')
@@ -94,3 +94,9 @@ def apod(request):
     context = {}
     context['nasa'] = json_to_nasa_APOD()
     return render(request, 'apod.html', context)    
+
+def beers(request):
+    #get current date yyyy-mm-dd
+    context = {}
+    context['beers'] = get_beers()
+    return render(request, 'beers.html', context)  
