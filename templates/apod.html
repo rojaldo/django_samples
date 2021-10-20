@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+  {% block mytitle %}
+    <title>Apod</title>
+    {% endblock %}
+
+{% block mainbody %}
+<div class="jumbotron">
+    <h1 class="display-3">{{nasa.title}}</h1>
+    <p class="lead">{{nasa.date}}</p>
+    <img src="{{nasa.url}}" alt=""/>
+    <hr class="my-2">
+    <p>{{nasa.explanation}}</p>
+    <p class="lead">
+    </p>
+</div>
+{% endblock %}

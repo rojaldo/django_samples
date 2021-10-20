@@ -5,7 +5,13 @@ import datetime
 def json_to_nasa_APOD():
     today = datetime.date.today()
     today = today.strftime('%Y-%m-%d')
-    result = NasaAPOD.objects.get(date=today)
+    # check NasaAPOD table for today's date
+    result = None
+    if NasaAPOD.objects.filter(date=today).exists():
+        try:
+            result = NasaAPOD.objects.get(date=today)
+        except NasaAPOD.DoesNotExist:
+            result = None
     if result is None:
         response = requests.get("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")
         if response.status_code == 200:
