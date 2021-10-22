@@ -40,7 +40,7 @@ def get_beers():
                 for beer in data:
                     myBeer = Beer(name=beer['name'],tagline=beer['tagline'],description=beer['description'],image_url=beer['image_url'],abv=beer['abv'], first_brewed=beer['first_brewed'])
                     myBeer.save()
-                print('Cervezas: ' + len(Beer.objects.all()))
+                print('Cervezas: ' + str(len(Beer.objects.all())))
                 return Beer.objects.all()
             except Exception as e:
                 print(e)
@@ -48,4 +48,16 @@ def get_beers():
         else:
             return None
     
+def get_unsaved_beers():
+
+    response = requests.get("https://api.punkapi.com/v2/beers?per_page=80")
+    if response.status_code == 200:
+        try:
+            data = response.json()            
+            return data
+        except Exception as e:
+            print(e)
+            return None
+    else:
+        return None
 

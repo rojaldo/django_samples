@@ -1,9 +1,11 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from samples.calculator_engine import processString
-from samples.models import Customer, Hero
-from samples.process import json_to_nasa_APOD, get_beers
+from samples.forms import ContactForm
+from samples.models import Customer, Hero, Post, Product
+from samples.process import json_to_nasa_APOD, get_beers, get_unsaved_beers
+from django.views.generic import CreateView
 
 def hello_world(request):
     name = request.GET.get('name', 'World')
@@ -100,3 +102,46 @@ def beers(request):
     context = {}
     context['beers'] = get_beers()
     return render(request, 'beers.html', context)  
+
+def contact(request):
+    submitted = False
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            Post.objects.create(
+                name=cd['name'],
+                email=cd['email'],
+                message=cd['message']
+            )
+            # assert False
+            return HttpResponseRedirect('/contact?submitted=True')
+    else:
+        form = ContactForm()
+        if 'submitted' in request.GET:
+            submitted = True
+
+    return render(request,
+        'contact.html',
+        {'form': form, 'submitted': submitted})
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('name', 'description', 'price')
+    template_name = 'product.html'
+
+    def get_success_url(self):
+        return '/success/'
+    
+    def form_valid(self, form):
+        form.save()
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+def success_view(request):
+    context = {}
+    return render(request, 'success.html', context)
+
+    
+     
+    
