@@ -20,8 +20,6 @@ class NasaAPOD(models.Model):
     title = models.CharField(max_length=100)
     url = models.URLField(max_length=100)
 
-    def __str__(self):
-        return self.title + ' - ' + self.date + ' - ' + self.media_type + ' - ' + self.copyright + ' - ' + self.explanation
 
 class Beer(models.Model):
     name = models.CharField(max_length=120)

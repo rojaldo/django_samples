@@ -1,3 +1,6 @@
+import datetime
+import json
+from django.http.response import JsonResponse
 from django.shortcuts import render
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -96,6 +99,14 @@ def apod(request):
     context = {}
     context['nasa'] = json_to_nasa_APOD()
     return render(request, 'apod.html', context)    
+
+def apod_api(request):
+    #get current date yyyy-mm-dd
+    today = datetime.date.today()
+    today = today.strftime('%Y-%m-%d')
+    my_date = request.GET.get('date', today)
+    apod = json_to_nasa_APOD(my_date)
+    return JsonResponse(apod, safe=False)
 
 def beers(request):
     #get current date yyyy-mm-dd
