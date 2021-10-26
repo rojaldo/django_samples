@@ -1,4 +1,4 @@
-from samples.models import Beer, NasaAPOD
+from samples.models import Beer, MyTrivialCard, NasaAPOD
 import requests
 import datetime
 
@@ -46,6 +46,25 @@ def get_beers():
                     myBeer.save()
                 print('Cervezas: ' + str(len(Beer.objects.all())))
                 return Beer.objects.all()
+            except Exception as e:
+                print(e)
+                return None
+        else:
+            return None
+
+def get_cards():
+    if MyTrivialCard.objects.all().exists():
+        return MyTrivialCard.objects.all()
+    else:
+        response = requests.get("https://opentdb.com/api.php?amount=10")
+        if response.status_code == 200:
+            try:
+                data = response.json()
+                for card in data['results']:
+                    myCard = MyTrivialCard(question=card['question'],correct_answer=card['correct_answer'],category=card['category'],type=card['type'], difficulty=card['difficulty'], incorrect_answers_1=card['incorrect_answers'][0], incorrect_answers_2=card['incorrect_answers'][1], incorrect_answers_3=card['incorrect_answers'][2])
+                    myCard.save()
+                print('Cervezas: ' + str(len(MyTrivialCard.objects.all())))
+                return MyTrivialCard.objects.all()
             except Exception as e:
                 print(e)
                 return None

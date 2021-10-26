@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from samples.calculator_engine import processString
 from samples.forms import ContactForm
 from samples.models import Customer, Hero, Post, Product
-from samples.process import json_to_nasa_APOD, get_beers, get_unsaved_beers
+from samples.process import get_cards, json_to_nasa_APOD, get_beers, get_unsaved_beers
 from django.views.generic import CreateView
 
 def hello_world(request):
@@ -111,11 +111,23 @@ def apod_api(request):
 
 def beers_api(request):
     beers = serializers.serialize('json', get_beers())
+    print('BEERS: ' + get_beers().count())
     beers = json.loads(beers)
     my_beers = []
     for beer in beers:
         my_beers.append(beer['fields'])
     return JsonResponse(my_beers, safe=False)
+
+def trivial_api(request):
+    cards = serializers.serialize('json', get_cards())
+    cards = json.loads(cards)
+    my_beers = []
+    for beer in cards:
+        my_beers.append(beer['fields'])
+        # my_beers['incorrect_answers'] = [beer['fields']['incorrect_answers_1'], beer['fields']['incorrect_answers_2'], beer['fields']['incorrect_answers_3']]
+    result = {}
+    result['results'] = my_beers
+    return JsonResponse(result, safe=False)
 
 def beers(request):
     #get current date yyyy-mm-dd

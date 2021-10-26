@@ -29,6 +29,18 @@ class Beer(models.Model):
     first_brewed = models.CharField(max_length=20)
     image_url = models.URLField(max_length=100)
 
+# card model from opentdb
+class MyTrivialCard(models.Model):
+    question = models.CharField(max_length=120)
+    category = models.CharField(max_length=120)
+    difficulty = models.CharField(max_length=120)
+    type = models.CharField(max_length=120)
+    correct_answer = models.CharField(max_length=120)
+    # get list of incorrect answers as a list
+    incorrect_answers_1 = models.CharField(max_length=120)
+    incorrect_answers_2 = models.CharField(max_length=120, default='')
+    incorrect_answers_3 = models.CharField(max_length=120, default='')
+    
 class Post(models.Model):
    author = models.ForeignKey('auth.User',on_delete=models.CASCADE, default=1)
    title = models.CharField(max_length=200)
